@@ -6,7 +6,6 @@
 // Variables
 const userId = 834;
 const API = "https://api.getmakerlog.com/";
-const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
   // Colors
 let textSecondary = new Color("#9ad8a5");
@@ -30,13 +29,13 @@ async function getData() {
 	// Get days
 	let d = new Date();
 	let daysData = [];
-	for(let i = 0; i < 3; i++) {
+	let url = `${API}users/${userId}/stream/`;
+	for(let i = 0; i < 7; i++) { 
 
-		let day = await getDay(d);
+		let day = await getDay(url);
 		daysData.push(day);
-		log(d);
+		url = day.previous_url;
 
-		d = new Date(d.getTime() - (1e3 * 60 * 60 * 24));
 	}
 
 	// Get tasks from all data
@@ -53,11 +52,7 @@ async function getData() {
 	return statusCount;
 }
 
-async function getDay(d) {
-	
-	// Generate URL
-	let url = `${API}users/${userId}/stream/${d.getFullYear()}/${months[d.getMonth()]}/${d.getDate()}`;
-	
+async function getDay(url) {
 	// Request data
 	let dataReq = new Request(url);
 	let data = await dataReq.loadJSON();
@@ -116,10 +111,6 @@ function addAltTitle(widget, str) {
 	title.textColor = textPrimary2;
 	return title;
 }
-
-
-
-
 
 
 function prettyPrint(json) {
