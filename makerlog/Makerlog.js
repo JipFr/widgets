@@ -73,7 +73,7 @@ async function createWidget(counts) {
 	widget.addSpacer();
 
 	  // Top subtitle
-	addSubtitle(widget, "Recent to-dos");
+	addSubtitle(widget, "Recent todos");
 
 	 // to-do count
 	addTitle(widget, `${counts.todo} todo${counts.todo !== 1 ? "s" :""}`);
